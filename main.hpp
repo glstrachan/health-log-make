@@ -1,14 +1,24 @@
-#ifndef MAIN_H
-#define MAIN_H
+#pragma once
 
-#include <bits/stdc++.h>
-using namespace std;
+#include <string>
+#include <vector>
 
-enum FIRST_DAY {MON, TUE, WED, THU, FRI, SAT, SUN};
+// #include <bits/stdc++.h>
 
-typedef struct activity
+enum FIRST_DAY
 {
-	string name;
+	MON,
+	TUE,
+	WED,
+	THU,
+	FRI,
+	SAT,
+	SUN
+};
+
+struct Activity
+{
+	std::string name;
 	/* Weight for weekdays */
 	int weight_day;
 
@@ -19,41 +29,41 @@ typedef struct activity
 	int max_dur;
 	int min_dur;
 
- 	/* Weighted time for activity (%) */
+	/* Weighted time for activity (%) */
 	int light;
 	int mod;
 	int vig;
 
-	string component;
+	std::string component;
 
 	/* Possible locations */
-	vector<string> locations;
-} activity ;
+	std::vector<std::string> locations;
+};
 
-typedef struct month
+struct Month
 {
 	int number;
 	int days;
-	string name;
+	std::string name;
 
 	FIRST_DAY first_day;
 
 	/* vector of reserved days */
 	/* No events will be scheduled for these days */
-	vector<int> reserved;
-} month;
+	std::vector<int> reserved;
+};
 
 /* Represents a single entry */
-typedef class datalog
+class Datalog
 {
-	public:
+public:
 	int day;
 	int month;
 	int year;
 
-	string activity;
-	string location;
-	string component;
+	std::string activity;
+	std::string location;
+	std::string component;
 
 	int duration;
 
@@ -61,34 +71,30 @@ typedef class datalog
 	int mod_time;
 	int vig_time;
 
-	string to_string();
-} datalog;
+	std::string to_string();
+};
 
 /* Represents a month of datalogs */
-typedef class log_collection
+class LogCollection
 {
 public:
-	vector<datalog> logs;
+	std::vector<Datalog> logs;
 
-	void add(datalog l);
+	void add(Datalog l);
 
-	string to_string();
-} log_collection;
+	std::string to_string();
+};
 
 /* Used for all of the activites and weights for a month */
-typedef class activity_pool
+class ActivityPool
 {
-	public:
-	vector<activity> pool;
+public:
+	std::vector<Activity> pool;
 
-	datalog request(bool day);
-} activity_pool;
+	Datalog request(bool day);
+};
 
 /* To be implemented */
 // activity_pool parse_activities(const string& filepath);
 
-void make(int seed, month m, activity_pool pool);
-
-int main();
-
-#endif /* MAIN_H */
+void make(int seed, Month m, ActivityPool pool);
